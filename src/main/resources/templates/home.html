@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Currency of NBRB</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="/css/main.css" rel="stylesheet">
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header_content">
+            <div class="header_title">Курс валют</div>
+        </div>
+    </div>
+</header>
+<main class="main">
+    <div class="container">
+        <form action="#" th:action="@{/response}" method="POST" th:object="${formFields}" class="main_content">
+            <div class="section">
+                <div class="section_title">Валюта&nbsp;
+                    <select name="cur_select" th:field="*{selectedCurrencyCode}">
+                        <option
+                                th:each="message : ${curList}"
+                                th:value="${message.Cur_ID}"
+                                th:text="${message.Cur_Name}"></option>
+                    </select>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section_title">Дата от&nbsp;
+                    <input name="date_from_input" th:field="*{dateFrom}" type="date"/>
+                </div>
+            </div>
+            <div class="section">
+                <div class="section_title">Дата до&nbsp;
+                    <input name="date_until_input" th:field="*{dateUntil}" type="date"/>
+                </div>
+            </div>
+            <button class="primary_btn">Выполнить</button>
+        </form>
+    </div>
+</main>
+<footer class="footer">
+    <div class="container">
+        <div class="header_content">
+            <div class="header_title">for NCEU</div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

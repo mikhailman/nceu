@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Currency of NBRB</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="/css/main.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header_content">
+            <div class="header_title">Курс валют</div>
+        </div>
+    </div>
+</header>
+<main class="main">
+    <div class="container">
+        <div class="main_content">
+            <div class="section_title" th:text="${currency.Cur_ID} + '. ' + ${currency.Cur_Name} + ' (' + ${currency.Cur_Abbreviation} + ')'" />
+            <div class="reg_text" th:text="'C даты ' + ${startDate} + ', по ' + ${endDate}" />
+            <div>
+                <canvas width="1200" height="400" id="currencyDynamics"></canvas>
+            </div>
+        </div>
+    </div>
+</main>
+<script th:inline="javascript">
+    const chartLabels = [];
+    const chartRates = [];
+    var currencyDynamics = /*[[${currencyDynamics}]]*/ [];
+    for (let i = 0; i < currencyDynamics.length; i++) {
+        chartLabels[i] = currencyDynamics[i].Date.replace("T00:00:00", "");
+        chartRates[i] = currencyDynamics[i].Cur_OfficialRate;
+    }
+
+    const ctx = document.getElementById('currencyDynamics');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: chartLabels,
+            datasets: [{
+                label: 'Курс',
+                data: chartRates,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+<footer class="footer">
+    <div class="container">
+        <div class="header_content">
+            <div class="header_title">for NCEU</div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
